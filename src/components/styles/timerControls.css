@@ -1,0 +1,18 @@
+.buttons {
+  margin-top: 2rem;
+}
+.start-btn {
+  width: 11rem;
+}
+.pause,
+.resume {
+  width: 6.5rem;
+  margin-left: 0.5rem;
+}
+.lap,
+.reset {
+  width: 6.5rem;
+  margin-right: 0.5rem;
+  background-color: rgba(255, 0, 0, 0.151);
+  color: red;
+}

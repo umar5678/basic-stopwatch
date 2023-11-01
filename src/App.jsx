@@ -1,12 +1,14 @@
 import { useState } from "react";
+import "./App.css";
+import TimerDisplay from "./components/TimerDisplay";
+import LapList from "./components/LapList";
+import TimerControls from "./components/TimerControls";
 
 const App = () => {
   const [running, setRunning] = useState(false);
   const [time, setTime] = useState(0);
   const [timerId, setTimerId] = useState();
-  // const [stopBtn, setStopBtn] = useState(false);
-  // const [startBtn, setStartBtn] = useState(true);
-  // const [resetBtn, setResetBtn] = useState(false);
+  const [laps, setLaps] = useState([]);
 
   const timer = (ms) => {
     const mins = (ms / 60000).toFixed();
@@ -25,9 +27,6 @@ const App = () => {
       }, 10);
 
       setTimerId(timerId);
-      // setStopBtn(true);
-      // setStartBtn(false);
-      // setResetBtn(true);
     }
   };
 
@@ -36,38 +35,48 @@ const App = () => {
       setRunning(false);
       clearInterval(timerId);
     }
-    // setStartBtn(true);
-    // setStopBtn(false);
   };
 
   const hdlReset = () => {
     setRunning(false);
     setTime(0);
+    setLaps([]);
     clearInterval(timerId);
   };
+
+  const hdlResume = () => {
+    if (!running && time !== 0) {
+      const startTime = Date.now() - time;
+      const timerId = setInterval(() => {
+        setTime(Date.now() - startTime);
+      }, 10);
+      setTimerId(timerId);
+      setRunning(true);
+    }
+  };
+
+  const hdlLap = () => {
+    if (running) {
+      setLaps([time, ...laps]);
+    }
+  };
+
   return (
-    <>
-      <div className="timer">{timer(time)}</div>
-      <div className="buttons">
-        {/* {startBtn && (
-          
-        )} */}
+    <div className="app">
+      <TimerDisplay time={time} timer={timer} />
 
-        <button className="start" onClick={hdlStart}>
-          Start
-        </button>
-        {/* {stopBtn && (    
-        )} */}
+      <LapList laps={laps} timer={timer} />
 
-        <button className="Stop" onClick={hdlStop}>
-          Stop
-        </button>
-
-        <button className="Reset" onClick={hdlReset}>
-          Reset
-        </button>
-      </div>
-    </>
+      <TimerControls
+        running={running}
+        time={time}
+        onStart={hdlStart}
+        onLap={hdlLap}
+        onReset={hdlReset}
+        onResume={hdlResume}
+        onStop={hdlStop}
+      />
+    </div>
   );
 };
 

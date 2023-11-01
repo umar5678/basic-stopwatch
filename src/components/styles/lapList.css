@@ -1,0 +1,23 @@
+.lap-container {
+  /* background-color: aquamarine; */
+  height: 380px;
+  width: 300px;
+  display: flex;
+  justify-content: center;
+
+  overflow: scroll;
+}
+.lap-container::-webkit-scrollbar {
+  width: 0; /* Hide horizontal scrollbar */
+  height: 0; /* Hide vertical scrollbar */
+}
+
+ol {
+  list-style-type: decimal-leading-zero;
+  color: rgb(59, 59, 59);
+  padding-left: 7rem;
+}
+.laps li {
+  padding: 3px 5rem;
+  font-size: 1.3rem;
+}
